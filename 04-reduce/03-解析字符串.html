@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>解析字符串</title>
+</head>
+
+<body>
+	<script>
+		// http://www.baidu.com?name=zhangsan&age=18&sex=nan#
+		// 解析出
+		// {name: 'zhangsan',age: 18, sex: 'nan' }
+		const url = 'http://www.baidu.com?name=zhangsan&age=18&sex=nan#'
+		function parseUrl(url) {
+			// 将关键信息截取出来并转换为数组
+			const arr = url.slice(url.indexOf('?') + 1, url.indexOf('#')).split('&');
+			// 将数组转化为对象
+			return arr.reduce((previous, item) => {
+				previous[item.split('=')[0]] = item.split('=')[1]
+				return previous
+			}, {})
+		}
+		console.log(parseUrl(url));
+	</script>
+</body>
+
+</html>
