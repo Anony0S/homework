@@ -1,47 +1,98 @@
 <template>
-  <div>
-    <input type="text" v-model="user.name" />
-    <input type="text" v-model="user.age" />
+  <div id="app">
+    <div>
+      <span>姓名:</span>
+      <input type="text" v-model.trim="name" />
+    </div>
+    <div>
+      <span>年龄:</span>
+      <input type="number" v-model.trim="age" />
+    </div>
+    <div>
+      <span>性别:</span>
+      <select v-model="sex">
+        <option value="男">男</option>
+        <option value="女">女</option>
+      </select>
+    </div>
+    <div>
+      <button @click="addList" v-text="!status ? '添加' : '修改'">添加/修改</button>
+    </div>
+    <div>
+      <table border="1" cellpadding="10" cellspacing="0">
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+          <th>性别</th>
+          <th>操作</th>
+        </tr>
+        <tr v-for="(item, index) in list" :key="index">
+          <td>{{ index + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.age }}</td>
+          <td>{{ item.sex }}</td>
+          <td>
+            <button @click="delList(index)">删除</button>
+            <button @click="changeInfo(index)">编辑</button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
-      user: {
-        name: "",
-        age: 0,
-      },
+      list: [
+        { name: "Tom", age: 19, sex: "男" },
+        { name: "Jone", age: 21, sex: "女" },
+      ],
+      name: "",
+      age: "",
+      sex: "",
+      index: 0,
+      status: false
     }
   },
-  // 目标: 侦听对象
-  /*
-  语法:
-    watch: {
-      变量名 (newVal, oldVal){
-        // 变量名对应值改变这里自动触发
-      },
-      变量名: {
-        handler(newVal, oldVal){
-
-        },
-        deep: true, // 深度侦听(对象里面层的值改变)
-        immediate: true // 立即侦听(网页打开handler执行一次)
+  methods: {
+    // 添加数据功能
+    addList() {
+      if (this.name === "" || this.age === "" || this.sex === "")
+        return alert("请输入完整的信息！")
+      // 收集用户信息
+      const user = {
+        name: this.name,
+        age: this.age,
+        sex: this.sex,
       }
-    }
-  */
-  watch: {
-    user: {
-      handler(newVal, oldVal) {
-        // user里的对象
-        console.log(newVal, oldVal)
-      },
-      deep: true,
-      immediate: true,
+      if (!this.status) this.list.push(user)
+      else {
+        this.list.splice(this.index, 1, user)
+        this.status = false
+      }
+      this.name = ''
+      this.age = ''
+      this.sex = ''
     },
+    // 编辑数据功能
+    changeInfo(index) {
+      this.name = this.list[index].name
+      this.age = this.list[index].age
+      this.sex = this.list[index].sex
+      this.index = index
+      this.status = true
+    },
+    // 删除数据功能
+    delList(index){
+      this.list.splice(index, 1)
+    }
   },
 }
 </script>
-
-<style></style>
+<style>
+div {
+  padding: 10px;
+}
+</style>
