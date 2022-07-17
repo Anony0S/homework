@@ -1,20 +1,6 @@
 <template>
-  <div class="box">
-    <dir class="imgBox">
-      <Dog1
-        v-for="(item, index) in arr"
-        :key="index"
-        :item="item"
-        :index="index"
-        v-on:printDog="printDog"
-      ></Dog1>
-    </dir>
-    <div class="text">
-      <ul>
-        <li>喜欢的狗狗</li>
-        <li v-for="(item, index) in loveDog" :key="index">{{ item }}</li>
-      </ul>
-    </div>
+  <div>
+    <Dog1 v-for="(item, index) in arr" :key="index" :item="item"></Dog1>
   </div>
 </template>
 
@@ -55,46 +41,10 @@ export default {
           dogName: "萨摩耶",
         },
       ],
-      loveDog: [],
     }
-  },
-  methods: {
-    printDog(dogName) {
-      this.loveDog.push(dogName)
-    },
   },
   components: { Dog1 },
 }
 </script>
 
-<style>
-* {
-  padding: 0;
-  margin: 0;
-}
-li {
-  list-style: none;
-}
-.box {
-  display: flex;
-  width: 770px;
-  border: 1px solid #000;
-  padding: 0;
-  margin: 10px;
-}
-.imgBox {
-  width: 666px;
-  padding: 0;
-  margin: 0;
-}
-.text {
-  flex: 1;
-  border: 1px solid #000;
-  margin: 10px 10px 10px 0;
-  line-height: 25px;
-  text-align: center;
-}
-li:first-child {
-  border-bottom: 1px solid #000;
-}
-</style>
+<style></style>
