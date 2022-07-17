@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		const arr = [1, 2, 3, 4, 5]
+		const arr2 = [
+			{
+				name: '张一',
+				age: 18,
+				status: false
+			},
+			{
+				name: '张二',
+				age: 19,
+				status: false
+			},
+			{
+				name: '张三',
+				age: 20,
+				status: true
+			},
+			{
+				name: '张四',
+				age: 21,
+				status: false
+			},
+		]
+		console.log(arr2.find((item) => item.status) ? true : false);
+	</script>
+</body>
+
+</html>
