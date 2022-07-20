@@ -1,28 +1,55 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="appBox">
+    <MyHeader></MyHeader>
+    <MyBody :list="list"></MyBody>
+    <MyFooter></MyFooter>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MyHeader from "./components/MyHeader.vue";
+import MyBody from "./components/MyBody.vue";
+import MyFooter from "./components/MyFooter.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    MyHeader,
+    MyBody,
+    MyFooter,
+  },
+  data() {
+    return {
+      list: [],
+    };
+  },
+  methods: {
+    search(val) {
+      this.list = this.list.filter((item) => item.bookname == val);
+    },
+    request() {
+      // console.log('被触发了！');
+      this.$axios({
+        url: "/api/getbooks",
+      }).then((res) => {
+        this.list = res.data.data;
+      });
+    },
+  },
+  // 钩子设置初始化数据
+  created() {
+    this.request()
+  },
+  mounted() {
+    this.$bus.$on("search", this.search);
+    this.$bus.$on("request", this.request);
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.appBox {
+  margin-top: 50px !important;
+  margin-left: 50px !important;
 }
 </style>
