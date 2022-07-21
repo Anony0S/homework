@@ -1,16 +1,44 @@
 <template>
   <div class="my-tab-bar">
-    <div class="tab-item">
+    <div
+      class="tab-item"
+      v-for="(item, index) in list"
+      :key="item.componentName"
+      :class="{ current: index === currentIndex }"
+      @click="click(index)"
+    >
       <!-- 图标 -->
-      <span class="iconfont"></span>
+      <span class="iconfont" :class="item.iconText"></span>
       <!-- 文字 -->
-      <span></span>
+      <span>{{ item.text }}</span>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      currentIndex: 0,
+    };
+  },
+  methods: {
+    click(index) {
+      this.currentIndex = index
+      this.$emit('click', index)
+    }
+  },
+  props: {
+    list: {
+      type: Array,
+      default: () => [],
+      validator: (val) => {
+        if (val.length >= 2 || val.length <= 5) return true;
+        else return false;
+      },
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -25,6 +53,7 @@ export default {};
   justify-content: space-around;
   align-items: center;
   background-color: white;
+  cursor: pointer;
   .tab-item {
     display: flex;
     flex-direction: column;

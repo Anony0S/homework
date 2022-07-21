@@ -1,19 +1,25 @@
 <template>
   <div>
-    <MyHeader></MyHeader>
-    <MyTabBar></MyTabBar>
-    <MyTable></MyTable>
+    <MyHeader title="TabBar案例"></MyHeader>
+    <div style="padding-top: 45px">
+      <component :is="comName"></component>
+    </div>
+    <MyTabBar :list="tabList" @click="click"></MyTabBar>
   </div>
 </template>
 
 <script>
 import MyHeader from "./components/MyHeader.vue";
+// import MyTable from "./components/MyTable.vue";
 import MyTabBar from "./components/MyTabBar.vue";
-import MyTable from "./components/MyTable.vue";
+import MyGoodsList from "./views/MyGoodList.vue";
+import MyGoodsSearch from "./views/MySearch.vue";
+import MyUserInfo from "./views/MyInfo.vue";
 export default {
   name: "App",
   data() {
     return {
+      comName: 'MyGoodsList',
       tabList: [
         {
           iconText: "icon-shangpinliebiao",
@@ -33,7 +39,12 @@ export default {
       ],
     };
   },
-  components: { MyHeader, MyTabBar, MyTable },
+  methods: {
+    click(index) {
+      this.comName = this.tabList[index].componentName
+    }
+  },
+  components: { MyHeader, MyTabBar, MyGoodsList, MyUserInfo, MyGoodsSearch },
 };
 </script>
 
