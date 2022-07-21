@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <MyHeader></MyHeader>
+    <MyTabBar></MyTabBar>
+    <MyTable></MyTable>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import MyHeader from "./components/MyHeader.vue";
+import MyTabBar from "./components/MyTabBar.vue";
+import MyTable from "./components/MyTable.vue";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      tabList: [
+        {
+          iconText: "icon-shangpinliebiao",
+          text: "商品列表",
+          componentName: "MyGoodsList",
+        },
+        {
+          iconText: "icon-sousuo",
+          text: "商品搜索",
+          componentName: "MyGoodsSearch",
+        },
+        {
+          iconText: "icon-user",
+          text: "我的信息",
+          componentName: "MyUserInfo",
+        },
+      ],
+    };
+  },
+  components: { MyHeader, MyTabBar, MyTable },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
