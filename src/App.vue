@@ -1,25 +1,21 @@
 <template>
   <div>
-    请输入：<input type="text" :value="name" @keyup="debounce" />
-    <h2>{{ name }}</h2>
+    <!-- <Life v-if="isShow"></Life> -->
+    <!-- <button @click="isShow = false">点击销毁</button> -->
+    <!-- <Mroe></Mroe> -->
+    <UseDirective></UseDirective>
   </div>
 </template>
 
 <script>
+// import Life from "./components/Life.vue"
+// import Mroe from "./components/More.vue"
+// import Tick from "./components/Tick.vue"
+import UseDirective from "./components/UseDirective.vue"
 export default {
-  data() {
-    return {
-      name: "张三",
-      timer: null,
-    }
-  },
-  methods: {
-    debounce(e) {
-      if (this.timer) clearTimeout(this.timer)
-      this.timer = setTimeout(() => {
-        this.name = e.target.value
-      }, 200)
-    },
-  },
+  name: "App",
+  components: { UseDirective },
 }
 </script>
+
+<style></style>
