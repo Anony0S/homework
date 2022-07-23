@@ -1,6 +1,6 @@
 <template>
   <div>
-	<h2>我是新闻！</h2>
+	MySearch
   </div>
 </template>
 
