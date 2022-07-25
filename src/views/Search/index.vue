@@ -5,6 +5,7 @@
             placeholder="请输入搜索关键词"
             v-model="searchValue"
             @input="showSearchList"
+            class="serch"
         />
         <!-- 搜索下容器 -->
         <div class="search_wrap" v-if="searchList.length === 0">
@@ -39,7 +40,7 @@
                     :key="item.id"
                 >
                     <template #right-icon>
-                        <van-icon :name="'play-circle-o'" size="0.6rem" />
+                        <van-icon :name="'play-circle-o'" size="0.6rem" @click="play(item.id)"/>
                     </template>
                 </van-cell>
             </van-list>
@@ -68,7 +69,6 @@ export default {
                 limit: 20,
                 offset: (this.page - 1) * 20,
             });
-            console.log(res);
             // 如果请求生成功但是没有数据
             if (!res.data.result || !res.data.result.songs) return [];
             return res.data.result.songs;
@@ -81,7 +81,6 @@ export default {
         },
         // 获取搜索列表
         async showSearchList() {
-            console.log(this.timer);
             if (this.timer) clearTimeout(this.timer);
             this.timer = setTimeout(async () => {
                 const res = await this.getSearchList();
@@ -107,6 +106,15 @@ export default {
             // 将 loading 改为 false 才能在下次继续触发
             this.loading = false;
         },
+        // 点击播放
+        play(id) {
+          this.$router.push({
+            path: "/play",
+            query: {
+              id,
+            }
+          })
+        }
     },
     mounted() {
         this.getKeyWords();
@@ -155,5 +163,8 @@ export default {
 .search_list {
     padding: 10px;
     margin-bottom: 40px;
+}
+.serch{
+  margin-top: 50px;
 }
 </style>

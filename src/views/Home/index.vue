@@ -19,17 +19,8 @@
                     <van-icon
                         :name="playName ? 'play-circle-o' : 'pause-circle-o'"
                         size="0.6rem"
-                        @click="playName = !playName"
+                        @click="play(item.id)"
                     />
-                    <!-- <audio
-                        :src="
-                            'https://music.163.com/song/media/outer/url?id=' +
-                            item.id +
-                            '.mp3'
-                        "
-                        controls
-                        style="dispaly: none"
-                    ></audio> -->
                 </template>
             </van-cell>
         </div>
@@ -59,6 +50,17 @@ export default {
         const res2 = await newMusicAPI({ limit: 20 });
         this.songList = res2.data.result;
         // console.log(res2);
+    },
+    methods: {
+        // 点击播放
+        play(id) {
+            this.$router.push({
+                path: "/play",
+                query: {
+                    id,
+                },
+            });
+        },
     },
 };
 </script>

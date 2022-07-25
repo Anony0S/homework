@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <van-nav-bar :title="$route.meta.title" />
+      <van-nav-bar :title="$route.meta.title" fixed />
     </div>
     <div>
       <router-view></router-view>
