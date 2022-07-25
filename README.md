@@ -1,24 +1,6 @@
-# vue-music
+## 实现简单网易云音乐播放和搜索  
 
-## Project setup
-```
-npm install
-```
+接口地址：http://6.120001.xyz:3000
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+使用接口：https://github.com/Binaryify/NeteaseCloudMusicApi  
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
