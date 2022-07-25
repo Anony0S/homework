@@ -4,7 +4,7 @@
             shape="round"
             placeholder="请输入搜索关键词"
             v-model="searchValue"
-            @input="getSearchList"
+            @input="showSearchList"
         />
         <!-- 搜索下容器 -->
         <div class="search_wrap" v-if="searchList.length === 0">
@@ -26,16 +26,23 @@
 
         <div class="search_list" v-else>
             <p class="hot_title">歌曲列表</p>
-            <van-cell
-                :title="item.name"
-                :label="item.ar[0].name + '-' + item.name"
-                v-for="item in searchList"
-                :key="item.id"
+            <van-list
+                v-model="loading"
+                :finished="finished"
+                finished-text="没有更多了"
+                @load="onLoad"
             >
-                <template #right-icon>
-                    <van-icon :name="'play-circle-o'" size="0.6rem" />
-                </template>
-            </van-cell>
+                <van-cell
+                    :title="item.name"
+                    :label="item.ar[0].name + '-' + item.name"
+                    v-for="item in searchList"
+                    :key="item.id"
+                >
+                    <template #right-icon>
+                        <van-icon :name="'play-circle-o'" size="0.6rem" />
+                    </template>
+                </van-cell>
+            </van-list>
         </div>
     </div>
 </template>
@@ -47,9 +54,25 @@ export default {
             keyWords: [],
             searchList: [],
             searchValue: "",
+            loading: false,
+            finished: false,
+            page: 1, //当前搜索页码
+            timer: null, //输入框防抖定时器
         };
     },
     methods: {
+        // 搜索列表数据
+        async getSearchList() {
+            const res = await searchListAPI({
+                keywords: this.searchValue,
+                limit: 20,
+                offset: (this.page - 1) * 20,
+            });
+            console.log(res);
+            // 如果请求生成功但是没有数据
+            if (!res.data.result || !res.data.result.songs) return [];
+            return res.data.result.songs;
+        },
         // 获取搜索热词
         async getKeyWords() {
             const res = await hotKeyAPI();
@@ -57,15 +80,32 @@ export default {
             this.keyWords = res.data.result.hots;
         },
         // 获取搜索列表
-        async getSearchList() {
-            const res = await searchListAPI({ keywords: this.searchValue });
-            console.log(res);
-            this.searchList = res.data.code === 200 ? res.data.result.songs : [];
+        async showSearchList() {
+            console.log(this.timer);
+            if (this.timer) clearTimeout(this.timer);
+            this.timer = setTimeout(async () => {
+                const res = await this.getSearchList();
+                this.searchList = res;
+            }, 500);
         },
         // 点击热词填充输入框
         clickVal(val) {
             this.searchValue = val;
-            this.getSearchList();
+            this.showSearchList();
+        },
+        async onLoad() {
+            this.page++;
+            const res = await this.getSearchList();
+            // 解决搜索重复问题
+            if (!res) {
+                this.finished = true;
+                this.loading = false;
+                return;
+            }
+            // 将新数据追加到列表中，使用新语法 或者 concat()：拼接两个数组，不改变原数组
+            this.searchList = [...this.searchList, ...res];
+            // 将 loading 改为 false 才能在下次继续触发
+            this.loading = false;
         },
     },
     mounted() {
@@ -114,5 +154,6 @@ export default {
 /* 搜索列表样式 */
 .search_list {
     padding: 10px;
+    margin-bottom: 40px;
 }
 </style>

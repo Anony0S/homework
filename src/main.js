@@ -9,7 +9,7 @@ import "@/assets/flexible"
 import router from "@/router/index"
 
 // 使用 vant 组件
-import { Tabbar, TabbarItem, NavBar, Col, Row, Image as VanImage, Cell, CellGroup, Icon, Search } from 'vant';
+import { Tabbar, TabbarItem, NavBar, Col, Row, Image as VanImage, Cell, CellGroup, Icon, Search, List } from 'vant';
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
 Vue.use(NavBar);
@@ -20,6 +20,7 @@ Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Icon);
 Vue.use(Search);
+Vue.use(List);
 
 // // 测试使用API
 // import { recommendMusicAPI } from "@/api/index"
